@@ -53,25 +53,55 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           {/* Quick-fill Sample buttons */}
-          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">
-              🚀 Sau încearcă rapid o cerere demonstrativă:
-            </span>
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => setRequestUrl("openid4vp://?client_id=x509_hash:fQuobVwJv000vDWcMtriXPzo2sPTm5_Mp10O87lCqcE&response_uri=https://servicii.mai.gov.ro/oid4vp/response&response_mode=direct_post.jwt&nonce=nonce-ro-test-2026&response_type=vp_token")}
-                className="text-xs font-semibold px-3 py-1.5 bg-white border border-blue-200 hover:border-blue-500 hover:bg-blue-50 text-blue-800 rounded-lg transition shadow-xs flex items-center gap-1.5"
-              >
-                <span>🇷🇴</span> Exemplu Servicii România (MAI / IGSU)
-              </button>
-              <button
-                type="button"
-                onClick={() => setRequestUrl("openid4vp://?client_id=x509_hash:fQuobVwJv000vDWcMtriXPzo2sPTm5_Mp10O87lCqcE&response_uri=https://verifier.example.com/response&response_mode=direct_post.jwt&nonce=demo-nonce-eudi-123&response_type=vp_token")}
-                className="text-xs font-semibold px-3 py-1.5 bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-100 text-slate-700 rounded-lg transition shadow-xs flex items-center gap-1.5"
-              >
-                <span>🇪🇺</span> Exemplu Standard EUDI HAIP
-              </button>
+          <div className="bg-slate-50 rounded-2xl p-4 sm:p-5 border-2 border-slate-200 shadow-inner">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <span>⚡</span>
+                <span>Selectează o cerere demonstrativă gata pregătită:</span>
+              </span>
+              <span className="text-[11px] font-semibold text-slate-500 hidden sm:inline-block">
+                Apasă pentru completare automată
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {(() => {
+                const sampleRo = "openid4vp://?client_id=x509_hash:fQuobVwJv000vDWcMtriXPzo2sPTm5_Mp10O87lCqcE&response_uri=https://servicii.mai.gov.ro/oid4vp/response&response_mode=direct_post.jwt&nonce=nonce-ro-test-2026&response_type=vp_token";
+                const isSelectedRo = requestUrl.trim() === sampleRo;
+                return (
+                  <button
+                    type="button"
+                    onClick={() => setRequestUrl(sampleRo)}
+                    className={`w-full py-3.5 px-4 rounded-xl border-2 transition-all duration-200 flex items-center justify-center gap-2.5 text-center cursor-pointer active:scale-[0.98] ${
+                      isSelectedRo
+                        ? "bg-blue-600 text-white border-blue-700 shadow-lg shadow-blue-600/30 ring-4 ring-blue-400/40 font-extrabold"
+                        : "bg-blue-50/90 text-blue-950 border-blue-200 hover:border-blue-400 hover:bg-blue-100 hover:text-blue-900 shadow-sm hover:shadow-md font-bold"
+                    }`}
+                  >
+                    <span className="text-xl shrink-0 leading-none">🇷🇴</span>
+                    <span className="text-sm">Exemplu Servicii România (MAI / IGSU)</span>
+                  </button>
+                );
+              })()}
+
+              {(() => {
+                const sampleEu = "openid4vp://?client_id=x509_hash:fQuobVwJv000vDWcMtriXPzo2sPTm5_Mp10O87lCqcE&response_uri=https://verifier.example.com/response&response_mode=direct_post.jwt&nonce=demo-nonce-eudi-123&response_type=vp_token";
+                const isSelectedEu = requestUrl.trim() === sampleEu;
+                return (
+                  <button
+                    type="button"
+                    onClick={() => setRequestUrl(sampleEu)}
+                    className={`w-full py-3.5 px-4 rounded-xl border-2 transition-all duration-200 flex items-center justify-center gap-2.5 text-center cursor-pointer active:scale-[0.98] ${
+                      isSelectedEu
+                        ? "bg-slate-900 text-white border-black shadow-lg shadow-slate-900/30 ring-4 ring-slate-400/40 font-extrabold"
+                        : "bg-slate-100/90 text-slate-900 border-slate-300 hover:border-slate-500 hover:bg-slate-200 shadow-sm hover:shadow-md font-bold"
+                    }`}
+                  >
+                    <span className="text-xl shrink-0 leading-none">🇪🇺</span>
+                    <span className="text-sm">Exemplu Standard EUDI HAIP</span>
+                  </button>
+                );
+              })()}
             </div>
           </div>
 
