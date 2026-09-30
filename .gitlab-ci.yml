@@ -1,0 +1,72 @@
+stages:
+  - build
+
+# Auto-cancel redundant pipelines
+workflow:
+  auto_cancel:
+    on_new_commit: interruptible
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main"
+
+.kaniko_auth: &kaniko_auth
+  before_script:
+    - |
+      # Configure authentication for both Docker Hub (for pulling base images) and OpenCode registry (for pushing)
+      mkdir -p /kaniko/.docker
+      cat > /kaniko/.docker/config.json <<EOF
+      {
+        "auths": {
+          "$CI_REGISTRY": {
+            "username": "$CI_REGISTRY_USER",
+            "password": "$CI_REGISTRY_PASSWORD"
+          }
+        }
+      }
+      EOF
+
+.build_template: &build_template
+  stage: build
+  interruptible: true
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
+  <<: *kaniko_auth
+  script:
+    - |
+      # Build with cache and performance optimizations
+      KANIKO_ARGS="--dockerfile ${DOCKERFILE} --context ."
+      # Cache settings
+      KANIKO_ARGS="$KANIKO_ARGS --cache=true --cache-ttl=168h"
+      KANIKO_ARGS="$KANIKO_ARGS --cache-repo=$CI_REGISTRY_IMAGE/cache-${IMAGE_NAME}"
+      # Performance optimizations
+      KANIKO_ARGS="$KANIKO_ARGS --use-new-run"
+      KANIKO_ARGS="$KANIKO_ARGS --snapshot-mode=redo"
+      KANIKO_ARGS="$KANIKO_ARGS --compressed-caching=false"
+      # Ignore unnecessary paths to speed up context upload
+      KANIKO_ARGS="$KANIKO_ARGS --ignore-path=/workspace/.git"
+      
+      # Check if we're on main branch - if so, push to registry
+      if [[ "$CI_COMMIT_BRANCH" == "main" ]]; then
+        echo "On main branch - will push to registry"
+        KANIKO_ARGS="$KANIKO_ARGS --destination $CI_REGISTRY_IMAGE:latest"
+        KANIKO_ARGS="$KANIKO_ARGS --destination $CI_REGISTRY_IMAGE:main"
+        KANIKO_ARGS="$KANIKO_ARGS --destination $CI_REGISTRY_IMAGE:${CI_COMMIT_SHORT_SHA}"
+      else
+        echo "Not on main branch - build only without pushing"
+        KANIKO_ARGS="$KANIKO_ARGS --no-push"
+      fi
+      
+      echo "Running with arguments: $KANIKO_ARGS"
+      /kaniko/executor $KANIKO_ARGS
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: on_success
+
+build-erica:
+  <<: *build_template
+  variables:
+    DOCKERFILE: Dockerfile
+    IMAGE_NAME: erica

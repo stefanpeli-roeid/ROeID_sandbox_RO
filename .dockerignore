@@ -1,0 +1,34 @@
+# Build artifacts
+dist/
+**/dist/
+
+# Dependencies (installed inside container)
+node_modules/
+**/node_modules/
+
+# Git
+.git/
+.gitignore
+
+# CI/CD
+.gitlab-ci.yml
+
+# Development config
+.env
+.env.local
+.env.*.local
+docker-compose.yml
+dev.sh
+
+# Docs & scripts (not needed at runtime)
+docs/
+scripts/
+
+# Tests
+src/tests/
+
+# Editor & OS
+.DS_Store
+.idea/
+.vscode/
+*.log

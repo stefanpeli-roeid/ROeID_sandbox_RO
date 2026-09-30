@@ -1,0 +1,45 @@
+{
+  "id": "pid-sd-jwt",
+  "format": "dc+sd-jwt",
+  "claims": {
+    "given_name": "Ion",
+    "family_name": "Popescu",
+    "birthdate": "1988-05-20",
+    "address": {
+      "street_address": "Bulevardul Regina Elisabeta nr. 45, Bl. B2, Ap. 12",
+      "postal_code": "050013",
+      "locality": "Sector 5, București",
+      "country": "RO"
+    },
+    "nationalities": ["RO"],
+    "gender": "M",
+    "birth_place": "București",
+    "birth_country": "RO",
+    "age_over_18": true,
+    "age_over_21": true,
+    "personal_administrative_number": "1880520410012",
+    "issuing_country": "RO",
+    "issuing_authority": "Ministerul Afacerilor Interne",
+    "document_number": "RX123456"
+  },
+  "selectivelyDisclosableClaims": [
+    "given_name",
+    "family_name",
+    "birthdate",
+    "address.street_address",
+    "address.postal_code",
+    "address.locality",
+    "address.country",
+    "nationalities",
+    "gender",
+    "birth_place",
+    "birth_country",
+    "age_over_18",
+    "age_over_21",
+    "personal_administrative_number",
+    "issuing_country",
+    "issuing_authority",
+    "document_number"
+  ],
+  "description": "Șablon PID România (RO) conform EUDI ARF / eIDAS 2.0 (Ion Popescu)"
+}

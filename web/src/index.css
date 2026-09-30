@@ -1,0 +1,493 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════
+   GERMAN EUDI WALLET DESIGN SYSTEM
+   Calm, institutional, editorial minimalism
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Color Palette */
+  --color-background: #F7F5F2;
+  --color-surface: #FFFFFF;
+
+  --color-text: #111111;
+  --color-text-muted: #5F5F5F;
+
+  --color-border: #E6E1DB;
+
+  --color-green-primary: #1e9d22;
+  --color-green-soft: #2dc266;
+  --color-green-bg: #E9F0EA;
+
+  --color-blue-primary: #5E7C99;
+  --color-blue-soft: #61bff2;
+  --color-blue-bg: #EAF1F6;
+
+  /* Legacy aliases for compatibility */
+  --color-foreground: var(--color-text);
+  --color-muted: var(--color-text-muted);
+  --color-accent: var(--color-green-primary);
+  --color-accent-hover: var(--color-green-primary);
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f1f5f9;
+    background-image: 
+      radial-gradient(at 10% 10%, rgba(37, 99, 235, 0.08) 0px, transparent 50%),
+      radial-gradient(at 90% 90%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+    background-attachment: fixed;
+    color: var(--color-text);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  code {
+    font-family: 'Monaco', 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODE TOGGLE NAVIGATION BUTTONS - Distinct Colors & Identical Sizes
+   ═══════════════════════════════════════════════════════════════ */
+
+.nav-mode-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: #f1f5f9;
+  padding: 6px;
+  border-radius: 16px;
+  border: 1px solid #cbd5e1;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+}
+
+.nav-mode-btn {
+  width: 152px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.835rem;
+  letter-spacing: 0.025em;
+  word-spacing: 0.12em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+/* 1. Test Requests - Blue Theme */
+.nav-mode-btn--test {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: 1.5px solid #93c5fd;
+}
+.nav-mode-btn--test:hover {
+  background-color: #bfdbfe;
+  color: #1e3a8a;
+  transform: translateY(-1px);
+}
+.nav-mode-btn--test.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #1d4ed8;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transform: scale(1.02);
+}
+
+/* 2. Request Editor - Purple Theme */
+.nav-mode-btn--editor {
+  background-color: #f3e8ff;
+  color: #6b21a8;
+  border: 1.5px solid #d8b4fe;
+}
+.nav-mode-btn--editor:hover {
+  background-color: #e9d5ff;
+  color: #581c87;
+  transform: translateY(-1px);
+}
+.nav-mode-btn--editor.active {
+  background-color: #9333ea;
+  color: #ffffff;
+  border-color: #7e22ce;
+  box-shadow: 0 4px 14px rgba(147, 51, 234, 0.35);
+  transform: scale(1.02);
+}
+
+/* 3. Verifier - Emerald Green Theme */
+.nav-mode-btn--verifier {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1.5px solid #6ee7b7;
+}
+.nav-mode-btn--verifier:hover {
+  background-color: #a7f3d0;
+  color: #064e3b;
+  transform: translateY(-1px);
+}
+.nav-mode-btn--verifier.active {
+  background-color: #059669;
+  color: #ffffff;
+  border-color: #047857;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+  transform: scale(1.02);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS - Understated & Refined
+   ═══════════════════════════════════════════════════════════════ */
+
+.btn-primary {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 13px 24px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3), 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4), 0 2px 4px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  color: #1e293b;
+  border-radius: 12px;
+  padding: 13px 24px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 180ms ease;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: #2563eb;
+  background: #f8fafc;
+  color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARDS - Subtle & Lightly Elevated
+   ═══════════════════════════════════════════════════════════════ */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  transition: all 180ms ease;
+}
+
+.card-hover:hover {
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.03),
+    0 8px 24px rgba(0,0,0,0.04);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT - Generous Whitespace & Vertical Rhythm
+   ═══════════════════════════════════════════════════════════════ */
+
+.app-content {
+  position: relative;
+  min-height: 100vh;
+}
+
+.section {
+  padding: 100px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VALIDATION STATES - Calm & Clear
+   ═══════════════════════════════════════════════════════════════ */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border-left: 3px solid;
+  transition: all 180ms ease;
+}
+
+.status-badge--success {
+  background-color: var(--color-green-bg);
+  color: #000;
+  border-left-color: var(--color-green-soft);
+}
+
+.status-badge--warning {
+  background-color: #fffbeb;
+  color: #000;
+  border-left-color: #92400e;
+}
+
+.status-badge--error {
+  background-color: #fef2f2;
+  color: #000;
+  border-left-color: #7f1d1d;
+}
+
+.status-badge--info {
+  background-color: var(--color-blue-bg);
+  color: #000;
+  border-left-color: var(--color-blue-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ISSUE CARDS - Clean Editorial Style
+   ═══════════════════════════════════════════════════════════════ */
+
+.issue-card {
+  display: flex;
+  gap: 1rem;
+  padding: 20px;
+  border-radius: 16px;
+  border-left: 3px solid;
+  background: var(--color-surface);
+  transition: all 180ms ease;
+}
+
+.issue-card--error {
+  border-left-color: #b91c1c;
+  background: #fef2f2;
+}
+
+.issue-card--warning {
+  border-left-color: #b45309;
+  background: #fffbeb;
+}
+
+.issue-card--success {
+  border-left-color: var(--color-green-primary);
+  background: var(--color-green-bg);
+}
+
+.issue-card__icon {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  font-weight: 600;
+  margin-top: 2px;
+  font-size: 0.875rem;
+}
+
+.issue-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.issue-card__title {
+  font-weight: 600;
+  color: var(--color-foreground);
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.issue-card__description {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SUGGESTION BOX - Helpful, Not Flashy
+   ═══════════════════════════════════════════════════════════════ */
+
+.suggestion-box {
+  background-color: var(--color-blue-bg);
+  border: 1px solid var(--color-blue-soft);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.suggestion-box__icon {
+  flex-shrink: 0;
+  color: var(--color-blue-primary);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.suggestion-box__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.suggestion-box__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-blue-primary);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.suggestion-box__text {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SPEC REFERENCES - Subtle & Accessible
+   ═══════════════════════════════════════════════════════════════ */
+
+.spec-reference {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin-top: 12px;
+}
+
+.spec-reference__link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 180ms ease;
+}
+
+.spec-reference__link:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRANSITIONS - Restrained & Professional
+   ═══════════════════════════════════════════════════════════════ */
+
+button, a, .card, .issue-card {
+  transition: all 180ms ease;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION HEADERS - Editorial Hierarchy
+   ═══════════════════════════════════════════════════════════════ */
+
+.section-header {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+}

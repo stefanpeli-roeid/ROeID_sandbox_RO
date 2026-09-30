@@ -1,0 +1,66 @@
+/**
+ * Express server for EUDI VP Debugger
+ */
+
+import express from "express";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+import debugRoutes from "./routes/debug.js";
+import verifierRoutes from "./routes/verifier.js";
+import { logger } from "./utils/Logger.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+// Wallets POST direct_post.jwt responses as application/x-www-form-urlencoded, not JSON -
+// scoped to /api/verifier since no other route needs it.
+app.use("/api/verifier", express.urlencoded({ extended: true }));
+
+// Health check
+app.get("/health", (_req, res) => {
+  res.json({ status: "ok" });
+});
+
+// API Routes
+app.use("/api", debugRoutes);
+app.use("/api/verifier", verifierRoutes);
+
+// Serve static frontend files (for production/Docker)
+const publicPath = path.join(__dirname, "public");
+app.use(express.static(publicPath));
+
+// SPA fallback - serve index.html for all other routes
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
+
+// Initialize runtime and start server
+async function startServer() {
+  try {
+    // Initialize certificate infrastructure
+    const runtimePath = path.resolve(__dirname, "../../dist/runtime.js");
+    const runtime = await import(runtimePath);
+    await runtime.initializeRuntime();
+
+    // Start server
+    app.listen(PORT, () => {
+      logger.info(`EUDI VP Debugger API started`, {
+        port: PORT,
+        debugEndpoint: `/api/debug`,
+        certificateInfrastructure: "initialized",
+      });
+    });
+  } catch (error) {
+    logger.error("Failed to start server", error instanceof Error ? error : new Error(String(error)));
+    process.exit(1);
+  }
+}
+
+startServer();
